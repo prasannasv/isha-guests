@@ -9,6 +9,8 @@
 
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'idea'
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -19,12 +21,34 @@ repositories {
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
-    // The production code uses the SLF4J logging API at compile time
-    compile 'org.slf4j:slf4j-api:1.7.21'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.12'
+
+    // Web app stuff
+    compile group: 'com.sparkjava', name: 'spark-core', version: '2.5.4'
+    compile group: 'com.google.template', name: 'soy', version: '2016-08-25'
+
+    // For OAuth2.0 id token verification
+    compile group: 'com.google.api-client', name: 'google-api-client', version: '1.21.0'
+
+    // Database stuff
+    compile group: 'org.mongodb', name: 'mongo-java-driver', version: '2.13.3'
+    compile group: 'org.mongodb.morphia', name: 'morphia', version: '1.3.0'
+
+    runtime group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.21'
 
     // Declare the dependency for your favourite test framework you want to use in your tests.
     // TestNG is also supported by the Gradle Test task. Just change the
     // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
     // 'test.useTestNG()' to your build script.
-    testCompile 'junit:junit:4.12'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
 }
+
+
+// Steps to deploy a sparkjava app on heroku is based on my previous learning:
+// https://github.com/prasannasv/isha-newsletter/commit/6af28cecb3cd2f36f7e55c7c0c3b5fd5d5baaa00
+
+mainClassName = 'org.ishausa.marketing.guests.app.EventGuestApp'
+applicationName = 'isha-guests'
+
+defaultTasks = ['clean']
+task stage(dependsOn: ['clean', 'installDist'])

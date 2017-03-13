@@ -1,0 +1,35 @@
+<!-- Form for user to offer or request ride -->
+<!-- Shown only if the user has not requested or offered a ride to this trip -->
+<form role="form" ng-submit="$ctrl.createRideOfferOrRequest()" ng-show="!$ctrl.hasAlreadyOfferedOrRequestedRide">
+  <div class="form-group">
+    <label class="col-sm-2 control-label">I would like to</label>
+    <div class="col-sm-4">
+      <label class="radio-inline">
+        <input type="radio" name="rideOptions" id="inlineRadio1" value="offer" required ng-model="$ctrl.ride.option"> Offer Ride
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="rideOptions" id="inlineRadio2" value="request" required ng-model="$ctrl.ride.option"> Request Ride
+      </label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="seats" class="col-sm-2 control-label">Number of seats</label>
+
+    <div class="col-sm-4">
+      <select required id="seats" class="form-control" ng-model="$ctrl.ride.seats">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-8">
+      <button type="submit" class="btn btn-default">Submit</button>
+    </div>
+  </div>
+</form>

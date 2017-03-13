@@ -1,0 +1,15 @@
+<h2>
+  {{$ctrl.event.from}} <small>to</small>
+  {{$ctrl.event.to}} <small>departing at</small>
+  {{$ctrl.event.departureDateAndTime | date: 'MMM dd, yyyy hh:mm a Z'}}
+</h2>
+<hr>
+
+<!-- Show all Ride Offers for this event (even fully matched ones?, maybe indicate that separately) -->
+<ride-offer-list></ride-offer-list>
+
+<!-- Show all Ride Requests for this event (even fully matched ones?, maybe indicate that separately) -->
+<ride-request-list></ride-request-list>
+
+<!-- Ability to create a ride -->
+<ride-create></ride-create>
