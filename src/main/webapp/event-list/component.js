@@ -7,7 +7,7 @@ angular.
     controller: ['$http', function EventListController($http) {
       var self = this;
 
-      self.orderByField = 'departureDateAndTime';
+      self.orderByField = 'eventDate';
       self.reverseOrder = false;
 
       self.orderBy = function (field) {
@@ -27,10 +27,10 @@ angular.
         var now = new Date().getTime();
         for (var i = 0, len = allEvents.length; i < len; ++i) {
           var event = allEvents[i];
-          event.departureDateAndTime = new Date(event.departureDateAndTime);
+          event.eventDate = new Date(event.eventDate);
           event.createdAt = new Date(event.createdAt);
 
-          if (event.departureDateAndTime.getTime() > now) {
+          if (event.eventDate.getTime() > now) {
             self.upcomingEvents.push(event);
           } else {
             self.pastEvents.push(event);

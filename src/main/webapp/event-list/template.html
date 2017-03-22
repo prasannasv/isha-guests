@@ -11,32 +11,32 @@
     <th style="text-align: center">
       #
     </th>
-    <th ng-click="$ctrl.orderBy('from')" style="text-align: center">
-      From
-      <span class="sortorder" ng-show="$ctrl.orderByField === 'from'" ng-class="{reverse: $ctrl.reverseOrder}"></span>
+    <th ng-click="$ctrl.orderBy('offerings')" style="text-align: center">
+      Offerings
+      <span class="sortorder" ng-show="$ctrl.orderByField === 'offerings'" ng-class="{reverse: $ctrl.reverseOrder}"></span>
     </th>
-    <th ng-click="$ctrl.orderBy('to')" style="text-align: center">
-      To
-      <span class="sortorder" ng-show="$ctrl.orderByField === 'to'" ng-class="{reverse: $ctrl.reverseOrder}"></span>
+    <th ng-click="$ctrl.orderBy('eventDate')" style="text-align: center">
+      Event Date
+      <span class="sortorder" ng-show="$ctrl.orderByField === 'eventDate'" ng-class="{reverse: $ctrl.reverseOrder}"></span>
     </th>
-    <th ng-click="$ctrl.orderBy('departureDateAndTime')" style="text-align: center">
-      Departure Date & Time
-      <span class="sortorder" ng-show="$ctrl.orderByField === 'departureDateAndTime'" ng-class="{reverse: $ctrl.reverseOrder}"></span>
+    <th ng-click="$ctrl.orderBy('center.cityName')" style="text-align: center">
+      Nearest Center
+      <span class="sortorder" ng-show="$ctrl.orderByField === 'center.cityName'" ng-class="{reverse: $ctrl.reverseOrder}"></span>
     </th>
     <th style="text-align: center">
-      Details
+      Manage
     </th>
   </tr>
   <tr ng-repeat="event in $ctrl.upcomingEvents | orderBy : $ctrl.orderByField : $ctrl.reverseOrder">
     <td>{{$index+1}}</td>
     <td>
-      {{event.from}}
+      {{event.offerings}}
     </td>
     <td>
-      {{event.to}}
+      {{event.eventDate | date: 'MMM dd, yyyy hh:mm a Z'}}
     </td>
     <td>
-      {{event.departureDateAndTime | date: 'MMM dd, yyyy hh:mm a Z'}}
+      {{event.nearestCenter.cityName}}
     </td>
     <td>
       <a href="#!/events/{{event.id}}"><img src="images/view.png" width="20"></a>
@@ -52,29 +52,29 @@
     <th style="text-align: center">
       #
     </th>
-    <th ng-click="$ctrl.orderBy('from')" style="text-align: center">
-      From
-    </th>
-    <th ng-click="$ctrl.orderBy('to')" style="text-align: center">
-      To
-    </th>
-    <th ng-click="$ctrl.orderBy('departureDateAndTime')" style="text-align: center">
-      Departure Date & Time
+    <th style="text-align: center">
+      Offerings
     </th>
     <th style="text-align: center">
-      Details
+      Event Date
+    </th>
+    <th style="text-align: center">
+      Nearest Center
+    </th>
+    <th style="text-align: center">
+      Manage
     </th>
   </tr>
-  <tr ng-repeat="event in $ctrl.pastEvents | orderBy : 'departureDateAndTime'">
+  <tr ng-repeat="event in $ctrl.pastEvents | orderBy : 'eventDate'">
     <td>{{$index+1}}</td>
     <td>
-      {{event.from}}
+      {{event.offerings}}
     </td>
     <td>
-      {{event.to}}
+      {{event.eventDate | date: 'MMM dd, yyyy hh:mm a Z'}}
     </td>
     <td>
-      {{event.departureDateAndTime | date: 'MMM dd, yyyy hh:mm a Z'}}
+      {{event.nearestCenter.cityName}}
     </td>
     <td>
       <a href="#!/events/{{event.id}}"><img src="images/view.png" width="20"></a>

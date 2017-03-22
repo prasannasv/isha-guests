@@ -1,9 +1,13 @@
 package org.ishausa.marketing.guests.service;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.bson.types.ObjectId;
+import org.ishausa.marketing.guests.model.Center;
 import org.ishausa.marketing.guests.model.Event;
+import org.ishausa.marketing.guests.model.EventType;
 import org.ishausa.marketing.guests.model.Role;
 import org.ishausa.marketing.guests.model.User;
 import org.mongodb.morphia.Datastore;
@@ -28,7 +32,19 @@ public class EventsService {
     }
 
     public List<Event> listAll() {
-        return datastore.find(Event.class).asList();
+        final Center seattle = new Center();
+        seattle.setCenterCode("STLC");
+        seattle.setCityName("Seattle");
+        seattle.setCountryCode("US");
+        final Event pastEvent = new Event();
+        pastEvent.setId("41239");
+        pastEvent.setCreator("to.srini@gmail.com");
+        pastEvent.setCreatedAt(new Date());
+        pastEvent.setEventDate(new Date());
+        pastEvent.setNearestCenter(seattle);
+        pastEvent.setOfferings(ImmutableSet.of(EventType.ISHA_KRIYA, EventType.INTRO_TALK));
+        return ImmutableList.of(pastEvent);
+        //return datastore.find(Event.class).asList();
     }
 
     public String createEvent(final User creator, final String jsonBody) {
