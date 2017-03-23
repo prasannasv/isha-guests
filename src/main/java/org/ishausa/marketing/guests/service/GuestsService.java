@@ -33,9 +33,9 @@ public class GuestsService {
     public GuestsService(final Datastore datastore) {
         this.datastore = datastore;
         this.silverPopClient = new XmlApiClient(
-                        System.getenv("SILVERPOP_API_URL"),
-                        System.getenv("SILVERPOP_API_USERNAME"),
-                        System.getenv("SILVERPOP_API_PASSWORD"));
+                getEnvPropOrThrow("SILVERPOP_API_URL"),
+                getEnvPropOrThrow("SILVERPOP_API_USERNAME"),
+                getEnvPropOrThrow("SILVERPOP_API_PASSWORD"));
     }
 
     public List<Guest> findForEventId(final String eventId) {
@@ -51,7 +51,7 @@ public class GuestsService {
         try {
             final AddRecipientCommand addRecipientCommand = new AddRecipientCommand();
 
-            addRecipientCommand.setListId(Integer.parseInt(System.getenv("SILVERPOP_DATABASE_ID")));
+            addRecipientCommand.setListId(Integer.parseInt(getEnvPropOrThrow("SILVERPOP_DATABASE_ID")));
             addRecipientCommand.setCreatedFrom(SILVERPOP_CREATED_FROM_OPTED_IN);
             addRecipientCommand.setUpdateIfFound(true);
 
@@ -66,6 +66,14 @@ public class GuestsService {
         } catch (final ApiResultException e) {
             log.log(Level.WARNING, "Failed to add recipient: " + guest + " in silverpop", e);
         }
+    }
+
+    private String getEnvPropOrThrow(final String propertyName) {
+        final String value = System.getenv(propertyName);
+        if (value == null) {
+            throw new IllegalStateException("Property: " + propertyName + " not set");
+        }
+        return value;
     }
 
     private ColumnElementType createColumn(final String name, final String value) {

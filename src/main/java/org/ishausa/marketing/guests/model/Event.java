@@ -5,6 +5,8 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Reference;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,7 +43,8 @@ public class Event {
         for (final EventType offering : sortedOfferings) {
             builder.append(offering).append('#');
         }
-        builder.append(DateTimeFormatter.ISO_LOCAL_DATE.format(eventDate.toInstant()));
+        final LocalDateTime ldt = LocalDateTime.ofInstant(eventDate.toInstant(), ZoneId.of("UTC"));
+        builder.append(ldt.format(DateTimeFormatter.ISO_LOCAL_DATE));
 
         return builder.toString();
     }
