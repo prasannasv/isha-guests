@@ -14,9 +14,13 @@
       City Name
       <span class="sortorder" ng-show="$ctrl.orderByField === 'cityName'" ng-class="{reverse: $ctrl.reverseOrder}"></span>
     </th>
-    <th ng-click="$ctrl.orderBy('countryCode')" style="text-align: center">
+    <th ng-click="$ctrl.orderBy('stateCode')" style="text-align: center">
+      State
+      <span class="sortorder" ng-show="$ctrl.orderByField === 'stateCode'" ng-class="{reverse: $ctrl.reverseOrder}"></span>
+    </th>
+    <th ng-click="$ctrl.orderBy('country')" style="text-align: center">
       Country
-      <span class="sortorder" ng-show="$ctrl.orderByField === 'countryCode'" ng-class="{reverse: $ctrl.reverseOrder}"></span>
+      <span class="sortorder" ng-show="$ctrl.orderByField === 'country'" ng-class="{reverse: $ctrl.reverseOrder}"></span>
     </th>
     <th ng-click="$ctrl.orderBy('centerCode')" style="text-align: center">
       Center Code
@@ -29,7 +33,10 @@
       {{center.cityName}}
     </td>
     <td>
-      {{center.countryCode}}
+      {{center.stateCode}}
+    </td>
+    <td>
+      {{center.country}}
     </td>
     <td>
       {{center.centerCode}}

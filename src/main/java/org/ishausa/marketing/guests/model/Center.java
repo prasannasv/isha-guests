@@ -16,6 +16,7 @@ public class Center {
     @Id
     private ObjectId id;
     private String cityName;
-    private String countryCode;
+    private String stateCode;
+    private String country;
     private String centerCode;
 }

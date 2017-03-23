@@ -1,0 +1,55 @@
+centerCode,cityName,stateCode,country,className
+ASHV,Asheville,TN,USA,org.ishausa.marketing.guests.model.Center
+ATLC,Atlanta,GA,USA,org.ishausa.marketing.guests.model.Center
+AUSC,Austin,TX,USA,org.ishausa.marketing.guests.model.Center
+BOSC,Boston,MA,USA,org.ishausa.marketing.guests.model.Center
+BZMN,Bozeman,MT,USA,org.ishausa.marketing.guests.model.Center
+CHAT,Chattanooga,TN,USA,org.ishausa.marketing.guests.model.Center
+CHIC,Chicago,IL,USA,org.ishausa.marketing.guests.model.Center
+CHLC,Charlotte,NC,USA,org.ishausa.marketing.guests.model.Center
+CINC,Cincinnati,OH,USA,org.ishausa.marketing.guests.model.Center
+CLGY,Calgary,AB,Canada,org.ishausa.marketing.guests.model.Center
+CLMC,Columbus,OH,USA,org.ishausa.marketing.guests.model.Center
+CLVC,Cleveland,OH,USA,org.ishausa.marketing.guests.model.Center
+COKV,Cookeville,TN,USA,org.ishausa.marketing.guests.model.Center
+DALC,Dallas,TX,USA,org.ishausa.marketing.guests.model.Center
+DENV,Denver,CO,USA,org.ishausa.marketing.guests.model.Center
+DTNC,Dayton,OH,USA,org.ishausa.marketing.guests.model.Center
+DTRC,Detroit,MI,USA,org.ishausa.marketing.guests.model.Center
+EDMN,Edmonton,AB,Canada,org.ishausa.marketing.guests.model.Center
+GAUC,Gautemala,GA,Guatemala,org.ishausa.marketing.guests.model.Center
+HOUC,Houston,TX,USA,org.ishausa.marketing.guests.model.Center
+HTDC,Hartford,CT,USA,org.ishausa.marketing.guests.model.Center
+IIIS,III,TN,USA,org.ishausa.marketing.guests.model.Center
+INPC,Indianapolis,IN,USA,org.ishausa.marketing.guests.model.Center
+KNOX,Knoxville,TN,USA,org.ishausa.marketing.guests.model.Center
+LASC,Los Angeles,CA,USA,org.ishausa.marketing.guests.model.Center
+LOUC,Louisville,KY,USA,org.ishausa.marketing.guests.model.Center
+MEMC,Memphis,TN,USA,org.ishausa.marketing.guests.model.Center
+MNCS,Manchester,TN,USA,org.ishausa.marketing.guests.model.Center
+MNLC,Montreal,QC,Canada,org.ishausa.marketing.guests.model.Center
+MSPC,Minneapolis,MN,USA,org.ishausa.marketing.guests.model.Center
+MURB,Murfreesboro,TN,USA,org.ishausa.marketing.guests.model.Center
+NENGC,New England,MA,USA,org.ishausa.marketing.guests.model.Center
+NJYC,New Jersey,NJ,USA,org.ishausa.marketing.guests.model.Center
+NSHC,Nashville,TN,USA,org.ishausa.marketing.guests.model.Center
+NYC,New York,NY,USA,org.ishausa.marketing.guests.model.Center
+ORCC,Orange County,CA,USA,org.ishausa.marketing.guests.model.Center
+OTHC,Other,NA,USA,org.ishausa.marketing.guests.model.Center
+PHLC,Philadelphia,PA,USA,org.ishausa.marketing.guests.model.Center
+PHXC,Phoenix,AZ,USA,org.ishausa.marketing.guests.model.Center
+PRTC,Portland,OR,USA,org.ishausa.marketing.guests.model.Center
+PTSC,Pittsburgh,PA,USA,org.ishausa.marketing.guests.model.Center
+RLGH,Raleigh,NC,USA,org.ishausa.marketing.guests.model.Center
+SACO,Sacramento,CA,USA,org.ishausa.marketing.guests.model.Center
+SBYC,SF-Bay,CA,USA,org.ishausa.marketing.guests.model.Center
+SFOC,San Francisco,CA,USA,org.ishausa.marketing.guests.model.Center
+SNDC,San Diego,CA,USA,org.ishausa.marketing.guests.model.Center
+STBR,Santa Barbara,CA,USA,org.ishausa.marketing.guests.model.Center
+STLC,Seattle,WA,USA,org.ishausa.marketing.guests.model.Center
+THOC,Thousand Oaks,CA,USA,org.ishausa.marketing.guests.model.Center
+TMPC,Tampa,FL,USA,org.ishausa.marketing.guests.model.Center
+TORC,Toronto,ON,Canada,org.ishausa.marketing.guests.model.Center
+VANC,Vancouver,BC,Canada,org.ishausa.marketing.guests.model.Center
+WDCC,Washington DC,DC,USA,org.ishausa.marketing.guests.model.Center
+WPBC,West Palm Beach,FL,USA,org.ishausa.marketing.guests.model.Center
