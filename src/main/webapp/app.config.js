@@ -10,11 +10,11 @@ angular.
         when('/events', {
           template: '<event-list></event-list>'
         }).
-        when('/events/:eventId', {
-          template: '<event-detail></event-detail>'
-        }).
         when('/events/new', {
           template: '<event-create></event-create>'
+        }).
+        when('/events/:eventId', {
+          template: '<event-detail></event-detail>'
         }).
         when('/admin/centers', {
           template: '<center-list></center-list>'
