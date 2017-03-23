@@ -11,10 +11,7 @@ import org.ishausa.marketing.guests.security.AuthenticationHandler;
 import org.ishausa.marketing.guests.security.HttpsEnforcer;
 import org.ishausa.marketing.guests.service.CentersService;
 import org.ishausa.marketing.guests.service.EventsService;
-import org.ishausa.marketing.guests.service.OfferRequestMatchesService;
-import org.ishausa.marketing.guests.service.RideOffersService;
-import org.ishausa.marketing.guests.service.RideRequestsService;
-import org.ishausa.marketing.guests.service.TripListResponse;
+import org.ishausa.marketing.guests.service.EventListResponse;
 import org.ishausa.marketing.guests.service.UsersService;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
@@ -42,10 +39,7 @@ public class EventGuestApp {
     private final EventsService eventsService;
     private final CentersService centersService;
     private final UsersService usersService;
-    private final RideOffersService rideOffersService;
-    private final RideRequestsService rideRequestsService;
     private final AuthenticationHandler authenticationHandler;
-    private final OfferRequestMatchesService offerRequestMatchesService;
 
     public static void main(final String[] args) {
         final EventGuestApp app = new EventGuestApp();
@@ -60,9 +54,6 @@ public class EventGuestApp {
         centersService = new CentersService(datastore);
         usersService = new UsersService(datastore);
         authenticationHandler = new AuthenticationHandler(usersService);
-        offerRequestMatchesService = new OfferRequestMatchesService(datastore);
-        rideOffersService = new RideOffersService(datastore, usersService, offerRequestMatchesService);
-        rideRequestsService = new RideRequestsService(datastore, usersService, offerRequestMatchesService);
     }
 
     private Datastore setupMorphia() {
@@ -121,8 +112,6 @@ public class EventGuestApp {
         configureEventResourceEndpoints();
 
         configureCenterResourceEndpoints();
-
-        configureRideResourceEndpoints();
     }
 
     private void configureAuthEndpoints() {
@@ -142,7 +131,7 @@ public class EventGuestApp {
         }, jsonTransformer);
 
         get(Paths.EVENTS, ContentType.JSON, (req, res) ->
-                new TripListResponse(req.attribute(AuthenticationHandler.AUTHENTICATED_USER),
+                new EventListResponse(req.attribute(AuthenticationHandler.AUTHENTICATED_USER),
                         eventsService.listAll()),
                 jsonTransformer);
 
@@ -161,42 +150,6 @@ public class EventGuestApp {
                 centersService.createCenter(authenticatedUser, req.body());
             }
             return "";
-        }, jsonTransformer);
-    }
-
-    private void configureRideResourceEndpoints() {
-        post(Paths.RIDE_OFFER_FOR_TRIP_ID, ContentType.JSON, (req, res) -> {
-            final User authenticatedUser = req.attribute(AuthenticationHandler.AUTHENTICATED_USER);
-            final String tripId = req.params(Paths.ID_PARAM);
-
-            rideOffersService.createRideOffer(authenticatedUser, tripId, req.body());
-
-            return res;
-        });
-
-        get(Paths.RIDE_OFFERS_FOR_TRIP_ID, ContentType.JSON, (req, res) -> {
-            final User user = req.attribute(AuthenticationHandler.AUTHENTICATED_USER);
-            final String tripId = req.params(Paths.ID_PARAM);
-
-            return user.getRole() == Role.REGULAR ? rideOffersService.findForTripAndUser(tripId, user.getUserId()) :
-                    rideOffersService.findForTrip(tripId);
-        }, jsonTransformer);
-
-        post(Paths.RIDE_REQUEST_FOR_TRIP_ID, ContentType.JSON, (req, res) -> {
-            final User authenticatedUser = req.attribute(AuthenticationHandler.AUTHENTICATED_USER);
-            final String tripId = req.params(Paths.ID_PARAM);
-
-            rideRequestsService.createRideRequest(authenticatedUser, tripId, req.body());
-
-            return res;
-        });
-
-        get(Paths.RIDE_REQUESTS_FOR_TRIP_ID, ContentType.JSON, (req, res) -> {
-            final User user = req.attribute(AuthenticationHandler.AUTHENTICATED_USER);
-            final String tripId = req.params(Paths.ID_PARAM);
-
-            return user.getRole() == Role.REGULAR ? rideRequestsService.findForTripAndUser(tripId, user.getUserId()) :
-                    rideRequestsService.findForTrip(tripId);
         }, jsonTransformer);
     }
 }
