@@ -31,8 +31,8 @@ import static spark.Spark.staticFiles;
 /**
  * Created by Prasanna Venkat on 12/29/2016.
  */
-public class EventGuestApp {
-    private static final Logger log = Logger.getLogger(EventGuestApp.class.getName());
+public class EventGuestsApp {
+    private static final Logger log = Logger.getLogger(EventGuestsApp.class.getName());
 
     private final JsonTransformer jsonTransformer;
 
@@ -42,12 +42,12 @@ public class EventGuestApp {
     private final AuthenticationHandler authenticationHandler;
 
     public static void main(final String[] args) {
-        final EventGuestApp app = new EventGuestApp();
+        final EventGuestsApp app = new EventGuestsApp();
 
         app.init();
     }
 
-    private EventGuestApp() {
+    private EventGuestsApp() {
         jsonTransformer = new JsonTransformer();
         final Datastore datastore = setupMorphia();
         eventsService = new EventsService(datastore);

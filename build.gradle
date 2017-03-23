@@ -47,7 +47,7 @@ dependencies {
 // Steps to deploy a sparkjava app on heroku is based on my previous learning:
 // https://github.com/prasannasv/isha-newsletter/commit/6af28cecb3cd2f36f7e55c7c0c3b5fd5d5baaa00
 
-mainClassName = 'org.ishausa.marketing.guests.app.EventGuestApp'
+mainClassName = 'org.ishausa.marketing.guests.app.EventGuestsApp'
 applicationName = 'isha-guests'
 
 defaultTasks = ['clean']
