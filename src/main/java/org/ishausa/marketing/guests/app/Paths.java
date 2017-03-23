@@ -17,8 +17,6 @@ public class Paths {
 
     public static final String CENTERS = API_VERSION + "/centers";
 
-    public static final String RIDE_OFFER_FOR_TRIP_ID = EVENT_BY_ID + "/ride_offer";
-    public static final String RIDE_REQUEST_FOR_TRIP_ID = EVENT_BY_ID + "/ride_request";
-    public static final String RIDE_OFFERS_FOR_TRIP_ID = EVENT_BY_ID + "/ride_offers";
-    public static final String RIDE_REQUESTS_FOR_TRIP_ID = EVENT_BY_ID + "/ride_requests";
+    public static final String GUEST_FOR_EVENT_ID = EVENT_BY_ID + "/guest";
+    public static final String GUESTS_FOR_EVENT_ID = EVENT_BY_ID + "/guests";
 }

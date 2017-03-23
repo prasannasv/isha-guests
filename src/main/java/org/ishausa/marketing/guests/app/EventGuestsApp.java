@@ -10,8 +10,9 @@ import org.ishausa.marketing.guests.renderer.SoyRenderer;
 import org.ishausa.marketing.guests.security.AuthenticationHandler;
 import org.ishausa.marketing.guests.security.HttpsEnforcer;
 import org.ishausa.marketing.guests.service.CentersService;
-import org.ishausa.marketing.guests.service.EventsService;
 import org.ishausa.marketing.guests.service.EventListResponse;
+import org.ishausa.marketing.guests.service.EventsService;
+import org.ishausa.marketing.guests.service.GuestsService;
 import org.ishausa.marketing.guests.service.UsersService;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
@@ -38,6 +39,7 @@ public class EventGuestsApp {
 
     private final EventsService eventsService;
     private final CentersService centersService;
+    private final GuestsService guestsService;
     private final UsersService usersService;
     private final AuthenticationHandler authenticationHandler;
 
@@ -52,6 +54,7 @@ public class EventGuestsApp {
         final Datastore datastore = setupMorphia();
         eventsService = new EventsService(datastore);
         centersService = new CentersService(datastore);
+        guestsService = new GuestsService(datastore);
         usersService = new UsersService(datastore);
         authenticationHandler = new AuthenticationHandler(usersService);
     }
@@ -112,6 +115,8 @@ public class EventGuestsApp {
         configureEventResourceEndpoints();
 
         configureCenterResourceEndpoints();
+
+        configureGuestResourceEndpoints();
     }
 
     private void configureAuthEndpoints() {
@@ -151,5 +156,18 @@ public class EventGuestsApp {
             }
             return "";
         }, jsonTransformer);
+    }
+
+    private void configureGuestResourceEndpoints() {
+        get(Paths.GUESTS_FOR_EVENT_ID, ContentType.JSON, (req, res) -> {
+            final String eventId = req.params(Paths.ID_PARAM);
+            return guestsService.findForEventId(eventId);
+        }, jsonTransformer);
+
+        post(Paths.GUEST_FOR_EVENT_ID, ContentType.JSON, (req, res) -> {
+            final String eventId = req.params(Paths.ID_PARAM);
+            guestsService.addGuest(eventId, req.body());
+            return "";
+        });
     }
 }

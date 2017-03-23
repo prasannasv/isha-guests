@@ -15,9 +15,7 @@ angular.
         self.orderByField = field;
       };
 
-      self.eventId = $routeParams.eventId;
-
-      $http.get('/api/v1/events/' + self.eventId + '/guests').then(function (response) {
+      $http.get('/api/v1/events/' + $routeParams.eventId + '/guests').then(function (response) {
         console.log("guest list response", response);
         self.guests = response.data;
       });

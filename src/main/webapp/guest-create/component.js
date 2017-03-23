@@ -10,7 +10,7 @@ angular.
         self.eventId = $routeParams.eventId;
 
         self.createGuest = function (guest) {
-          $http.post('/api/v1/events/' + self.eventId + '/guests', guest).then(function (response) {
+          $http.post('/api/v1/events/' + self.eventId + '/guest', guest).then(function (response) {
             window.location.reload(true /* get the data from server */);
           });
         };
