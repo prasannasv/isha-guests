@@ -13,7 +13,7 @@ angular.
         when('/events/:eventId', {
           template: '<event-detail></event-detail>'
         }).
-        when('/event_create', {
+        when('/events/new', {
           template: '<event-create></event-create>'
         }).
         when('/admin/centers', {

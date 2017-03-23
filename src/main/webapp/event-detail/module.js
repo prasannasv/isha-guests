@@ -1,5 +1,7 @@
 'use strict';
 
 angular.module('eventDetail', [
-  'ngRoute'
+  'ngRoute',
+  'guestList',
+  'guestCreate'
 ]);
