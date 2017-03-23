@@ -2,18 +2,18 @@
   <div class="form-group">
     <label class="col-sm-2 control-label">Event Offerings (select all that apply)</label>
 
-    <label class="checkbox-inline">
-      <input type="checkbox" class="form-control" name="offerings" ng-model="event.offerings.ISHA_KRIYA"> Isha Kriya
-    </label>
     <div class="col-sm-10">
-      <label class="checkbox-inline">
-        <input type="checkbox" class="form-control" name="offerings" ng-model="event.offerings.INTRO_TALK"> Intro Talk
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="offerings" ng-model="event.offerings.ISHA_KRIYA"> Isha Kriya
       </label>
-      <label class="checkbox-inline">
-        <input type="checkbox" class="form-control" name="offerings" ng-model="event.offerings.UPA_YOGA"> Upa Yoga
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="offerings" ng-model="event.offerings.INTRO_TALK"> Intro Talk
       </label>
-      <label class="checkbox-inline">
-        <input type="checkbox" class="form-control" name="offerings" ng-model="event.offerings.INFORMATIONAL"> Informational
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="offerings" ng-model="event.offerings.UPA_YOGA"> Upa Yoga
+      </label>
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="offerings" ng-model="event.offerings.INFORMATIONAL"> Informational
       </label>
     </div>
   </div>
@@ -21,7 +21,9 @@
     <label class="col-sm-2 control-label">Nearest Center</label>
 
     <div class="col-sm-10">
-      <select class="form-control" ng-model="event.nearestCenter" ng-options="center.cityName for center in $ctrl.centers">
+      <select class="form-control"
+              ng-model="event.nearestCenter"
+              ng-options="center.key for center in $ctrl.centers">
       </select>
     </div>
   </div>
