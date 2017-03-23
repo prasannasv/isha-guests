@@ -1,15 +1,30 @@
 <h2>
-  {{$ctrl.event.from}} <small>to</small>
-  {{$ctrl.event.to}} <small>departing at</small>
-  {{$ctrl.event.departureDateAndTime | date: 'MMM dd, yyyy hh:mm a Z'}}
+  Event Details
 </h2>
+
+<table class="table table-hover table-striped">
+  <tr>
+    <th style="text-align: center">
+      Nearest Center
+    </th>
+    <th style="text-align: center">
+      Offerings
+    </th>
+    <th style="text-align: center">
+      Event Date
+    </th>
+  </tr>
+  <tr>
+    <td style="text-align: center">
+      {{$ctrl.event.nearestCenter.cityName}}
+    </td>
+    <td style="text-align: center">
+      {{$ctrl.event.offerings}}
+    </td>
+    <td style="text-align: center">
+      {{$ctrl.event.eventDate | date: 'MMM dd, yyyy hh:mm a Z'}}
+    </td>
+  </tr>
+</table>
+
 <hr>
-
-<!-- Show all Ride Offers for this event (even fully matched ones?, maybe indicate that separately) -->
-<ride-offer-list></ride-offer-list>
-
-<!-- Show all Ride Requests for this event (even fully matched ones?, maybe indicate that separately) -->
-<ride-request-list></ride-request-list>
-
-<!-- Ability to create a ride -->
-<ride-create></ride-create>
