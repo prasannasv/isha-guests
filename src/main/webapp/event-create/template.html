@@ -1,23 +1,35 @@
 <form class="form-horizontal" role="form" ng-submit="$ctrl.createEvent(event)">
   <div class="form-group">
-    <label for="from" class="col-sm-2 control-label">From</label>
+    <label class="col-sm-2 control-label">Event Offerings (select all that apply)</label>
 
+    <label class="checkbox-inline">
+      <input type="checkbox" class="form-control" name="offerings" ng-model="event.offerings.ISHA_KRIYA"> Isha Kriya
+    </label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="from" placeholder="BNA.." required ng-model="event.from">
+      <label class="checkbox-inline">
+        <input type="checkbox" class="form-control" name="offerings" ng-model="event.offerings.INTRO_TALK"> Intro Talk
+      </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" class="form-control" name="offerings" ng-model="event.offerings.UPA_YOGA"> Upa Yoga
+      </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" class="form-control" name="offerings" ng-model="event.offerings.INFORMATIONAL"> Informational
+      </label>
     </div>
   </div>
   <div class="form-group">
-    <label for="to" class="col-sm-2 control-label">To</label>
+    <label class="col-sm-2 control-label">Nearest Center</label>
 
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="to" placeholder="iii.." required ng-model="event.to">
+      <select class="form-control" ng-model="event.nearestCenter" ng-options="center.cityName for center in $ctrl.centers">
+      </select>
     </div>
   </div>
   <div class="form-group">
-    <label for="dep" class="col-sm-2 control-label">Departure Date & Time</label>
+    <label for="dep" class="col-sm-2 control-label">Event Date</label>
     <div class="col-sm-10">
       <div class='input-group date' id='dep'>
-        <datetimepicker ng-model="event.departureDateAndTime" required></datetimepicker>
+        <datetimepicker ng-model="event.eventDate" required></datetimepicker>
       </div>
     </div>
   </div>

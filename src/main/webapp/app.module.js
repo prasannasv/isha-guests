@@ -4,5 +4,7 @@ var carpoolApp = angular.module('eventGuestsApp', [
     'ngRoute',
     'eventCreate',
     'eventDetail',
-    'eventList'
+    'eventList',
+    'centerCreate',
+    'centerList'
 ]);

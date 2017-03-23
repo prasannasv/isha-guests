@@ -9,15 +9,15 @@ import org.ishausa.marketing.guests.renderer.JsonTransformer;
 import org.ishausa.marketing.guests.renderer.SoyRenderer;
 import org.ishausa.marketing.guests.security.AuthenticationHandler;
 import org.ishausa.marketing.guests.security.HttpsEnforcer;
+import org.ishausa.marketing.guests.service.CentersService;
+import org.ishausa.marketing.guests.service.EventsService;
 import org.ishausa.marketing.guests.service.OfferRequestMatchesService;
 import org.ishausa.marketing.guests.service.RideOffersService;
 import org.ishausa.marketing.guests.service.RideRequestsService;
 import org.ishausa.marketing.guests.service.TripListResponse;
-import org.ishausa.marketing.guests.service.EventsService;
 import org.ishausa.marketing.guests.service.UsersService;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
-import spark.Spark;
 import spark.utils.StringUtils;
 
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +40,7 @@ public class EventGuestApp {
     private final JsonTransformer jsonTransformer;
 
     private final EventsService eventsService;
+    private final CentersService centersService;
     private final UsersService usersService;
     private final RideOffersService rideOffersService;
     private final RideRequestsService rideRequestsService;
@@ -56,6 +57,7 @@ public class EventGuestApp {
         jsonTransformer = new JsonTransformer();
         final Datastore datastore = setupMorphia();
         eventsService = new EventsService(datastore);
+        centersService = new CentersService(datastore);
         usersService = new UsersService(datastore);
         authenticationHandler = new AuthenticationHandler(usersService);
         offerRequestMatchesService = new OfferRequestMatchesService(datastore);
@@ -116,7 +118,9 @@ public class EventGuestApp {
                 SoyRenderer.INSTANCE.render(SoyRenderer.EventGuestsAppTemplate.MAIN,
                         ImmutableMap.of("name", req.session().attribute(AuthenticationHandler.NAME))));
 
-        configureTripResourceEndpoints();
+        configureEventResourceEndpoints();
+
+        configureCenterResourceEndpoints();
 
         configureRideResourceEndpoints();
     }
@@ -126,8 +130,8 @@ public class EventGuestApp {
         post(Paths.VALIDATE_ID_TOKEN, authenticationHandler::finishLogin);
     }
 
-    private void configureTripResourceEndpoints() {
-        Spark.post(Paths.EVENTS, ContentType.JSON, (req, res) -> {
+    private void configureEventResourceEndpoints() {
+        post(Paths.EVENTS, ContentType.JSON, (req, res) -> {
             final User authenticatedUser = req.attribute(AuthenticationHandler.AUTHENTICATED_USER);
             if (Role.REGULAR.equals(authenticatedUser.getRole())) {
                 res.status(HttpServletResponse.SC_FORBIDDEN);
@@ -144,6 +148,20 @@ public class EventGuestApp {
 
         get(Paths.EVENT_BY_ID, ContentType.JSON,
                 (req, res) -> eventsService.find(req.params(Paths.ID_PARAM)), jsonTransformer);
+    }
+
+    private void configureCenterResourceEndpoints() {
+        get(Paths.CENTERS, ContentType.JSON, (req, res) -> centersService.listAll(), jsonTransformer);
+
+        post(Paths.CENTERS, ContentType.JSON, (req, res) -> {
+            final User authenticatedUser = req.attribute(AuthenticationHandler.AUTHENTICATED_USER);
+            if (Role.REGULAR.equals(authenticatedUser.getRole())) {
+                res.status(HttpServletResponse.SC_FORBIDDEN);
+            } else {
+                centersService.createCenter(authenticatedUser, req.body());
+            }
+            return "";
+        }, jsonTransformer);
     }
 
     private void configureRideResourceEndpoints() {

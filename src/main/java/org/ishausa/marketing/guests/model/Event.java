@@ -3,6 +3,7 @@ package org.ishausa.marketing.guests.model;
 import lombok.Data;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Reference;
 
 import java.util.Date;
 import java.util.Set;
@@ -20,6 +21,7 @@ public class Event {
 
     private Set<EventType> offerings;
     private Date eventDate;
+    @Reference
     private Center nearestCenter;
 
     /** userId of the User that created this event. */

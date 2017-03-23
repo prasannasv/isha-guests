@@ -1,0 +1,40 @@
+<h2>
+  Centers
+  <a class="btn btn-primary pull-right" href="#!/admin/centers/new" ng-show="$ctrl.userRole !== 'REGULAR'">
+    <i class="glyphicon glyphicon-plus"></i> New Center
+  </a>
+</h2>
+
+<table class="table table-hover table-striped">
+  <tr>
+    <th style="text-align: center">
+      #
+    </th>
+    <th ng-click="$ctrl.orderBy('cityName')" style="text-align: center">
+      City Name
+      <span class="sortorder" ng-show="$ctrl.orderByField === 'cityName'" ng-class="{reverse: $ctrl.reverseOrder}"></span>
+    </th>
+    <th ng-click="$ctrl.orderBy('countryCode')" style="text-align: center">
+      Country
+      <span class="sortorder" ng-show="$ctrl.orderByField === 'countryCode'" ng-class="{reverse: $ctrl.reverseOrder}"></span>
+    </th>
+    <th ng-click="$ctrl.orderBy('centerCode')" style="text-align: center">
+      Center Code
+      <span class="sortorder" ng-show="$ctrl.orderByField === 'centerCode'" ng-class="{reverse: $ctrl.reverseOrder}"></span>
+    </th>
+  </tr>
+  <tr ng-repeat="center in $ctrl.centers | orderBy : $ctrl.orderByField : $ctrl.reverseOrder">
+    <td>{{$index+1}}</td>
+    <td>
+      {{center.cityName}}
+    </td>
+    <td>
+      {{center.countryCode}}
+    </td>
+    <td>
+      {{center.centerCode}}
+    </td>
+  </tr>
+</table>
+
+<hr>

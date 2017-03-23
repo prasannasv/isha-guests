@@ -16,6 +16,12 @@ angular.
         when('/event_create', {
           template: '<event-create></event-create>'
         }).
+        when('/admin/centers', {
+          template: '<center-list></center-list>'
+        }).
+        when('/admin/centers/new', {
+          template: '<center-create></center-create>'
+        }).
         otherwise('/events');
     }
   ]);

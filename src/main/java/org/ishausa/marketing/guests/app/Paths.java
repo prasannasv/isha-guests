@@ -15,6 +15,8 @@ public class Paths {
     public static final String ID_PARAM = ":id";
     public static final String EVENT_BY_ID = EVENTS + "/" + ID_PARAM;
 
+    public static final String CENTERS = API_VERSION + "/centers";
+
     public static final String RIDE_OFFER_FOR_TRIP_ID = EVENT_BY_ID + "/ride_offer";
     public static final String RIDE_REQUEST_FOR_TRIP_ID = EVENT_BY_ID + "/ride_request";
     public static final String RIDE_OFFERS_FOR_TRIP_ID = EVENT_BY_ID + "/ride_offers";
