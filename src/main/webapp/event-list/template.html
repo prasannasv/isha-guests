@@ -36,7 +36,7 @@
       {{event.eventDate | date: 'MMM dd, yyyy hh:mm a Z'}}
     </td>
     <td>
-      {{event.nearestCenter.cityName}}
+      {{event.nearestCenter.cityName + ', ' + event.nearestCenter.stateCode + ', ' + event.nearestCenter.country}}
     </td>
     <td>
       <a href="#!/events/{{event.id}}"><img src="images/view.png" width="20"></a>
@@ -74,7 +74,7 @@
       {{event.eventDate | date: 'MMM dd, yyyy hh:mm a Z'}}
     </td>
     <td>
-      {{event.nearestCenter.cityName}}
+      {{event.nearestCenter.cityName + ', ' + event.nearestCenter.stateCode + ', ' + event.nearestCenter.country}}
     </td>
     <td>
       <a href="#!/events/{{event.id}}"><img src="images/view.png" width="20"></a>
