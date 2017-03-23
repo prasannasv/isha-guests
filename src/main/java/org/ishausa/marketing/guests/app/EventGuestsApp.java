@@ -166,7 +166,7 @@ public class EventGuestsApp {
 
         post(Paths.GUEST_FOR_EVENT_ID, ContentType.JSON, (req, res) -> {
             final String eventId = req.params(Paths.ID_PARAM);
-            guestsService.addGuest(eventId, req.body());
+            guestsService.addGuest(eventsService.find(eventId), req.body());
             return "";
         });
     }

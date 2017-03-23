@@ -5,7 +5,11 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Reference;
 
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,4 +31,18 @@ public class Event {
     /** userId of the User that created this event. */
     private String creator;
     private Date createdAt;
+
+    public String createEventId() {
+        final StringBuilder builder = new StringBuilder();
+
+        builder.append(nearestCenter.getCenterCode()).append('_');
+        final List<EventType> sortedOfferings = new ArrayList<>(offerings);
+        Collections.sort(sortedOfferings);
+        for (final EventType offering : sortedOfferings) {
+            builder.append(offering).append('#');
+        }
+        builder.append(DateTimeFormatter.ISO_LOCAL_DATE.format(eventDate.toInstant()));
+
+        return builder.toString();
+    }
 }
