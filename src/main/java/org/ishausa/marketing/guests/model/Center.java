@@ -18,22 +18,4 @@ public class Center {
     private String cityName;
     private String countryCode;
     private String centerCode;
-
-    public static Center seattle() {
-        return createCenter("Seattle", "US", "STLC");
-    }
-
-    public static Center losAngeles() {
-        return createCenter("Los Angeles", "US", "LASC");
-    }
-
-    public static Center createCenter(final String cityName, final String countryCode, final String centerCode) {
-        final Center center = new Center();
-
-        center.setCityName(cityName);
-        center.setCountryCode(countryCode);
-        center.setCenterCode(centerCode);
-
-        return center;
-    }
 }
