@@ -4,9 +4,11 @@ angular.
   module('guestCreate').
   component('guestCreate', {
     templateUrl: 'guest-create/template.html',
-    controller: ['$routeParams', '$http',
-      function GuestCreateController($routeParams, $http) {
+    controller: ['$scope', '$routeParams', '$http', 'FileUploader',
+      function GuestCreateController($scope, $routeParams, $http, FileUploader) {
         var self = this;
+        $scope.uploader = new FileUploader();
+
         self.eventId = $routeParams.eventId;
 
         self.createGuest = function (guest) {

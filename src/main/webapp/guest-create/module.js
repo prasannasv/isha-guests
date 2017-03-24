@@ -1,5 +1,6 @@
 'use strict';
 
 angular.module('guestCreate', [
-  'ngRoute'
+  'ngRoute',
+  'angularFileUpload'
 ]);
