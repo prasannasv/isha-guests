@@ -1,8 +1,8 @@
 <form class="form-horizontal" role="form" ng-submit="$ctrl.createEvent(event)">
   <div class="form-group">
-    <label class="col-sm-2 control-label">Event Offerings (select all that apply)</label>
+    <label class="col-sm-4 control-label">Event Offerings (select all that apply)</label>
 
-    <div class="col-sm-10">
+    <div class="col-sm-5">
       <label class="form-check-label">
         <input type="checkbox" class="form-check-input" name="offerings" ng-model="event.offerings.ISHA_KRIYA"> Isha Kriya
       </label>
@@ -18,9 +18,9 @@
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-2 control-label">Nearest Center</label>
+    <label class="col-sm-4 control-label">Nearest Center</label>
 
-    <div class="col-sm-10">
+    <div class="col-sm-5">
       <select class="form-control"
               ng-model="event.nearestCenter"
               ng-options="center.key for center in $ctrl.centers">
@@ -28,15 +28,15 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="dep" class="col-sm-2 control-label">Event Date</label>
-    <div class="col-sm-10">
+    <label for="dep" class="col-sm-4 control-label">Event Date</label>
+    <div class="col-sm-5">
       <div class='input-group date' id='dep'>
         <datetimepicker ng-model="event.eventDate" required></datetimepicker>
       </div>
     </div>
   </div>
   <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
+    <div class="col-sm-offset-4 col-sm-5">
       <button type="submit" class="btn btn-default">New Event</button>
     </div>
   </div>
