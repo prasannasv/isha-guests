@@ -16,9 +16,6 @@
       Email
       <span class="sortorder" ng-show="$ctrl.orderByField === 'email'" ng-class="{reverse: $ctrl.reverseOrder}"></span>
     </th>
-    <th style="text-align: center">
-      Manage
-    </th>
   </tr>
   <tr ng-repeat="guest in $ctrl.guests | orderBy : $ctrl.orderByField : $ctrl.reverseOrder">
     <td>{{$index+1}}</td>
@@ -30,9 +27,6 @@
     </td>
     <td>
       {{guest.email}}
-    </td>
-    <td>
-      <a href="#!/events/{{guest.eventId}}/guests/{{guest.id}}"><img src="images/view.png" width="20"></a>
     </td>
   </tr>
 </table>
