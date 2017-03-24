@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.bson.types.ObjectId;
 import org.ishausa.marketing.guests.model.Event;
-import org.ishausa.marketing.guests.model.Role;
 import org.ishausa.marketing.guests.model.User;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
@@ -27,14 +26,13 @@ public class EventsService {
         this.datastore = datastore;
     }
 
-    public List<Event> listAll() {
-        return datastore.find(Event.class).asList();
+    public List<Event> listAll(final User user) {
+        return datastore.find(Event.class)
+                .filter("creator =", user.getUserId())
+                .asList();
     }
 
     public String createEvent(final User creator, final String jsonBody) {
-        if (Role.REGULAR.equals(creator.getRole())) {
-            throw new IllegalStateException("Regular users are not allowed to create events");
-        }
         log.info("Creating event from json: " + jsonBody);
         final Event event = GSON.fromJson(jsonBody, Event.class);
         event.setCreator(creator.getUserId());

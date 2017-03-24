@@ -131,18 +131,13 @@ public class EventGuestsApp {
     private void configureEventResourceEndpoints() {
         post(Paths.EVENTS, ContentType.JSON, (req, res) -> {
             final User authenticatedUser = req.attribute(AuthenticationHandler.AUTHENTICATED_USER);
-            if (Role.REGULAR.equals(authenticatedUser.getRole())) {
-                res.status(HttpServletResponse.SC_FORBIDDEN);
-                return null;
-            } else {
-                return eventsService.createEvent(authenticatedUser, req.body());
-            }
+            return eventsService.createEvent(authenticatedUser, req.body());
         }, jsonTransformer);
 
-        get(Paths.EVENTS, ContentType.JSON, (req, res) ->
-                new EventListResponse(req.attribute(AuthenticationHandler.AUTHENTICATED_USER),
-                        eventsService.listAll()),
-                jsonTransformer);
+        get(Paths.EVENTS, ContentType.JSON, (req, res) -> {
+            final User user = req.attribute(AuthenticationHandler.AUTHENTICATED_USER);
+            return new EventListResponse(user, eventsService.listAll(user));
+        }, jsonTransformer);
 
         get(Paths.EVENT_BY_ID, ContentType.JSON,
                 (req, res) -> eventsService.find(req.params(Paths.ID_PARAM)), jsonTransformer);
