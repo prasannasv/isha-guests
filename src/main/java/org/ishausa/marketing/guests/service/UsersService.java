@@ -1,5 +1,6 @@
 package org.ishausa.marketing.guests.service;
 
+import org.ishausa.marketing.guests.model.Role;
 import org.ishausa.marketing.guests.model.User;
 import org.mongodb.morphia.Datastore;
 
@@ -47,5 +48,37 @@ public class UsersService {
     public List<User> listAll() {
         return datastore.find(User.class)
                 .asList();
+    }
+
+    public void promote(final String userId) {
+        final User user = findById(userId);
+        switch (user.getRole()) {
+            case REGULAR:
+                user.setRole(Role.EVENT_ADMIN);
+                break;
+            case EVENT_ADMIN:
+                user.setRole(Role.ADMIN);
+                break;
+            default:
+                return;
+        }
+
+        datastore.save(user);
+    }
+
+    public void demote(final String userId) {
+        final User user = findById(userId);
+        switch (user.getRole()) {
+            case ADMIN:
+                user.setRole(Role.EVENT_ADMIN);
+                break;
+            case EVENT_ADMIN:
+                user.setRole(Role.REGULAR);
+                break;
+            default:
+                return;
+        }
+
+        datastore.save(user);
     }
 }

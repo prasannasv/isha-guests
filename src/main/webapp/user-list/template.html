@@ -24,6 +24,9 @@
         Role
         <span class="sortorder" ng-show="$ctrl.orderByField === 'role'" ng-class="{reverse: $ctrl.reverseOrder}"></span>
       </th>
+      <th style="text-align: center">
+        Manage
+      </th>
     </tr>
     <tr ng-repeat="user in $ctrl.users | orderBy : $ctrl.orderByField : $ctrl.reverseOrder">
       <td>{{$index+1}}</td>
@@ -38,6 +41,10 @@
       </td>
       <td>
         {{user.role}}
+      </td>
+      <td>
+        <button class="btn btn-success" ng-click="$ctrl.promote(user)">Promote</button>
+        <button class="btn btn-danger" ng-click="$ctrl.demote(user)">Demote</button>
       </td>
     </tr>
   </table>

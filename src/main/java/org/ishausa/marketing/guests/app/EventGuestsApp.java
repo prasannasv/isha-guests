@@ -226,5 +226,27 @@ public class EventGuestsApp {
                 return "NOT_OK";
             }
         }, jsonTransformer);
+
+        post(Paths.PROMOTE_USER, ContentType.JSON, (req, res) -> {
+           final User requester = req.attribute(AuthenticationHandler.AUTHENTICATED_USER);
+           final String concerningUserId = req.params(Paths.ID_PARAM);
+           if (Role.ADMIN.equals(requester.getRole()) && !requester.getUserId().equals(concerningUserId)) {
+               usersService.promote(concerningUserId);
+           } else {
+               log.info("Need to be admin and not act on oneself");
+           }
+           return "";
+        });
+
+        post(Paths.DEMOTE_USER, ContentType.JSON, (req, res) -> {
+            final User requester = req.attribute(AuthenticationHandler.AUTHENTICATED_USER);
+            final String concerningUserId = req.params(Paths.ID_PARAM);
+            if (Role.ADMIN.equals(requester.getRole()) && !requester.getUserId().equals(concerningUserId)) {
+                usersService.demote(concerningUserId);
+            } else {
+                log.info("Need to be admin and not act on oneself");
+            }
+            return "";
+        });
     }
 }

@@ -20,4 +20,6 @@ public class Paths {
 
     public static final String CENTERS = API_VERSION + "/centers";
     public static final String USERS = API_VERSION + "/users";
+    public static final String PROMOTE_USER = USERS + "/" + ID_PARAM + "/promote";
+    public static final String DEMOTE_USER = USERS + "/" + ID_PARAM + "/demote";
 }
