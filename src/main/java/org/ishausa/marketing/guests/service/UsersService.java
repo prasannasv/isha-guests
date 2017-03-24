@@ -3,6 +3,7 @@ package org.ishausa.marketing.guests.service;
 import org.ishausa.marketing.guests.model.User;
 import org.mongodb.morphia.Datastore;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -41,5 +42,10 @@ public class UsersService {
         }
 
         datastore.save(user);
+    }
+
+    public List<User> listAll() {
+        return datastore.find(User.class)
+                .asList();
     }
 }

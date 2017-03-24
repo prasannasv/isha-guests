@@ -1,83 +1,100 @@
-<h2>
-  All Events
-  <a class="btn btn-primary pull-right" href="#!/events/new">
-    <i class="glyphicon glyphicon-plus"></i> New Event
-  </a>
-</h2>
+<div ng-show="$ctrl.userRole !== 'REGULAR'">
+  <h2>
+    All Events
+    <a class="btn btn-primary pull-right" href="#!/events/new">
+      <i class="glyphicon glyphicon-plus"></i> New Event
+    </a>
+  </h2>
 
-<h3>Upcoming Events</h3>
-<table class="table table-hover table-striped">
-  <tr>
-    <th style="text-align: center">
-      #
-    </th>
-    <th ng-click="$ctrl.orderBy('offerings')" style="text-align: center">
-      Offerings
-      <span class="sortorder" ng-show="$ctrl.orderByField === 'offerings'" ng-class="{reverse: $ctrl.reverseOrder}"></span>
-    </th>
-    <th ng-click="$ctrl.orderBy('eventDate')" style="text-align: center">
-      Event Date
-      <span class="sortorder" ng-show="$ctrl.orderByField === 'eventDate'" ng-class="{reverse: $ctrl.reverseOrder}"></span>
-    </th>
-    <th ng-click="$ctrl.orderBy('center.cityName')" style="text-align: center">
-      Nearest Center
-      <span class="sortorder" ng-show="$ctrl.orderByField === 'center.cityName'" ng-class="{reverse: $ctrl.reverseOrder}"></span>
-    </th>
-    <th style="text-align: center">
-      Manage
-    </th>
-  </tr>
-  <tr ng-repeat="event in $ctrl.upcomingEvents | orderBy : $ctrl.orderByField : $ctrl.reverseOrder">
-    <td>{{$index+1}}</td>
-    <td>
-      {{event.offerings}}
-    </td>
-    <td>
-      {{event.eventDate | date: 'MMM dd, yyyy hh:mm a Z'}}
-    </td>
-    <td>
-      {{event.nearestCenter.cityName + ', ' + event.nearestCenter.stateCode + ', ' + event.nearestCenter.country}}
-    </td>
-    <td>
-      <a href="#!/events/{{event.id}}"><img src="images/view.png" width="20"></a>
-    </td>
-  </tr>
-</table>
+  <div ng-show="$ctrl.upcomingEvents.length > 0">
+    <h3>Upcoming Events</h3>
+    <table class="table table-hover table-striped">
+      <tr>
+        <th style="text-align: center">
+          #
+        </th>
+        <th ng-click="$ctrl.orderBy('offerings')" style="text-align: center">
+          Offerings
+          <span class="sortorder" ng-show="$ctrl.orderByField === 'offerings'" ng-class="{reverse: $ctrl.reverseOrder}"></span>
+        </th>
+        <th ng-click="$ctrl.orderBy('eventDate')" style="text-align: center">
+          Event Date
+          <span class="sortorder" ng-show="$ctrl.orderByField === 'eventDate'" ng-class="{reverse: $ctrl.reverseOrder}"></span>
+        </th>
+        <th ng-click="$ctrl.orderBy('center.cityName')" style="text-align: center">
+          Nearest Center
+          <span class="sortorder" ng-show="$ctrl.orderByField === 'center.cityName'" ng-class="{reverse: $ctrl.reverseOrder}"></span>
+        </th>
+        <th style="text-align: center">
+          Manage
+        </th>
+      </tr>
+      <tr ng-repeat="event in $ctrl.upcomingEvents | orderBy : $ctrl.orderByField : $ctrl.reverseOrder">
+        <td>{{$index+1}}</td>
+        <td>
+          {{event.offerings}}
+        </td>
+        <td>
+          {{event.eventDate | date: 'MMM dd, yyyy hh:mm a Z'}}
+        </td>
+        <td>
+          {{event.nearestCenter.cityName + ', ' + event.nearestCenter.stateCode + ', ' + event.nearestCenter.country}}
+        </td>
+        <td>
+          <a href="#!/events/{{event.id}}"><img src="images/view.png" width="20"></a>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div ng-show="$ctrl.upcomingEvents.length == 0">
+    No upcoming events to show.
+  </div>
+  <hr>
 
-<hr>
+  <div ng-show="$ctrl.pastEvents.length > 0 || $ctrl.isPrivilegedUser">
+    <h3>Past Events</h3>
+    <table class="table table-hover table-striped">
+      <tr>
+        <th style="text-align: center">
+          #
+        </th>
+        <th style="text-align: center">
+          Offerings
+        </th>
+        <th style="text-align: center">
+          Event Date
+        </th>
+        <th style="text-align: center">
+          Nearest Center
+        </th>
+        <th style="text-align: center">
+          Manage
+        </th>
+      </tr>
+      <tr ng-repeat="event in $ctrl.pastEvents | orderBy : 'eventDate'">
+        <td>{{$index+1}}</td>
+        <td>
+          {{event.offerings}}
+        </td>
+        <td>
+          {{event.eventDate | date: 'MMM dd, yyyy hh:mm a Z'}}
+        </td>
+        <td>
+          {{event.nearestCenter.cityName + ', ' + event.nearestCenter.stateCode + ', ' + event.nearestCenter.country}}
+        </td>
+        <td>
+          <a href="#!/events/{{event.id}}"><img src="images/view.png" width="20"></a>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div ng-show="$ctrl.pastEvents == 0">
+    No Past events to show.
+  </div>
+</div>
 
-<h3>Past Events</h3>
-<table class="table table-hover table-striped">
-  <tr>
-    <th style="text-align: center">
-      #
-    </th>
-    <th style="text-align: center">
-      Offerings
-    </th>
-    <th style="text-align: center">
-      Event Date
-    </th>
-    <th style="text-align: center">
-      Nearest Center
-    </th>
-    <th style="text-align: center">
-      Manage
-    </th>
-  </tr>
-  <tr ng-repeat="event in $ctrl.pastEvents | orderBy : 'eventDate'">
-    <td>{{$index+1}}</td>
-    <td>
-      {{event.offerings}}
-    </td>
-    <td>
-      {{event.eventDate | date: 'MMM dd, yyyy hh:mm a Z'}}
-    </td>
-    <td>
-      {{event.nearestCenter.cityName + ', ' + event.nearestCenter.stateCode + ', ' + event.nearestCenter.country}}
-    </td>
-    <td>
-      <a href="#!/events/{{event.id}}"><img src="images/view.png" width="20"></a>
-    </td>
-  </tr>
-</table>
+<div ng-show="$ctrl.userRole === 'REGULAR'">
+  <div class="alert alert-warning" role="alert">
+  You do not have access to this portal. You can request access by mailing <a href="mailto:ishakriya@ishausa.org">ishakriya@ishausa.org</a>.
+  </div>
+</div>

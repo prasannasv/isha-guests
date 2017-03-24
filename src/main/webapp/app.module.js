@@ -6,5 +6,6 @@ var carpoolApp = angular.module('eventGuestsApp', [
     'eventDetail',
     'eventList',
     'centerCreate',
-    'centerList'
+    'centerList',
+    'userList'
 ]);

@@ -22,6 +22,9 @@ angular.
         when('/admin/centers/new', {
           template: '<center-create></center-create>'
         }).
+        when('/admin/users', {
+          template: '<user-list></user-list>'
+        }).
         otherwise('/events');
     }
   ]);

@@ -23,6 +23,7 @@ import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -118,9 +119,15 @@ public class EventGuestsApp {
 
         configureEventResourceEndpoints();
 
+        configureGuestResourceEndpoints();
+
+        configureAdminEndpoints();
+    }
+
+    private void configureAdminEndpoints() {
         configureCenterResourceEndpoints();
 
-        configureGuestResourceEndpoints();
+        configureUserResourceEndpoints();
     }
 
     private void configureAuthEndpoints() {
@@ -131,16 +138,68 @@ public class EventGuestsApp {
     private void configureEventResourceEndpoints() {
         post(Paths.EVENTS, ContentType.JSON, (req, res) -> {
             final User authenticatedUser = req.attribute(AuthenticationHandler.AUTHENTICATED_USER);
-            return eventsService.createEvent(authenticatedUser, req.body());
+            if (authenticatedUser.getRole().compareTo(Role.EVENT_ADMIN) >= 0) {
+                return eventsService.createEvent(authenticatedUser, req.body());
+            } else {
+                res.status(HttpServletResponse.SC_FORBIDDEN);
+                return "NOT_OK";
+            }
         }, jsonTransformer);
 
         get(Paths.EVENTS, ContentType.JSON, (req, res) -> {
             final User user = req.attribute(AuthenticationHandler.AUTHENTICATED_USER);
-            return new EventListResponse(user, eventsService.listAll(user));
+            if (user.getRole().compareTo(Role.EVENT_ADMIN) >= 0) {
+                return new EventListResponse(user, eventsService.listAll(user));
+            } else {
+                return new EventListResponse(user, new ArrayList<>());
+            }
         }, jsonTransformer);
 
         get(Paths.EVENT_BY_ID, ContentType.JSON,
                 (req, res) -> eventsService.find(req.params(Paths.ID_PARAM)), jsonTransformer);
+    }
+
+    private void configureGuestResourceEndpoints() {
+        get(Paths.GUESTS_FOR_EVENT_ID, ContentType.JSON, (req, res) -> {
+            final String eventId = req.params(Paths.ID_PARAM);
+            return guestsService.findForEventId(eventId);
+        }, jsonTransformer);
+
+        post(Paths.GUEST_FOR_EVENT_ID, ContentType.JSON, (req, res) -> {
+            final User user = req.attribute(AuthenticationHandler.AUTHENTICATED_USER);
+            if (user.getRole().compareTo(Role.EVENT_ADMIN) >= 0) {
+                final String eventId = req.params(Paths.ID_PARAM);
+                // TODO: Address non-existent eventId
+                guestsService.addGuest(eventsService.find(eventId), req.body());
+                return "OK";
+            } else {
+                res.status(HttpServletResponse.SC_FORBIDDEN);
+                return "NOT_OK";
+            }
+        });
+
+        // For bulk upload
+        post(Paths.GUESTS_FOR_EVENT_ID, ContentType.MULTIPART_FORM_DATA, (req, res) -> {
+            final User user = req.attribute(AuthenticationHandler.AUTHENTICATED_USER);
+            if (user.getRole().compareTo(Role.EVENT_ADMIN) < 0) {
+                res.status(HttpServletResponse.SC_FORBIDDEN);
+                return "NOT_OK";
+            }
+
+            final String eventId = req.params(Paths.ID_PARAM);
+            final Event event = eventsService.find(eventId);
+
+            //http://stackoverflow.com/questions/29373468/spark-java-how-to-handle-multipart-form-data-input
+            final MultipartConfigElement multipartConfigElement = new MultipartConfigElement("/tmp");
+            req.raw().setAttribute("org.eclipse.jetty.multipartConfig", multipartConfigElement);
+
+            final Part uploadedFile = req.raw().getPart("file");
+            try (final InputStream in = uploadedFile.getInputStream()) {
+                guestsService.addGuests(event, in);
+            }
+
+            return "OK";
+        });
     }
 
     private void configureCenterResourceEndpoints() {
@@ -157,34 +216,15 @@ public class EventGuestsApp {
         });
     }
 
-    private void configureGuestResourceEndpoints() {
-        get(Paths.GUESTS_FOR_EVENT_ID, ContentType.JSON, (req, res) -> {
-            final String eventId = req.params(Paths.ID_PARAM);
-            return guestsService.findForEventId(eventId);
-        }, jsonTransformer);
-
-        post(Paths.GUEST_FOR_EVENT_ID, ContentType.JSON, (req, res) -> {
-            final String eventId = req.params(Paths.ID_PARAM);
-            // TODO: Address non-existent eventId
-            guestsService.addGuest(eventsService.find(eventId), req.body());
-            return "OK";
-        });
-
-        // For bulk upload
-        post(Paths.GUESTS_FOR_EVENT_ID, ContentType.MULTIPART_FORM_DATA, (req, res) -> {
-            final String eventId = req.params(Paths.ID_PARAM);
-            final Event event = eventsService.find(eventId);
-
-            //http://stackoverflow.com/questions/29373468/spark-java-how-to-handle-multipart-form-data-input
-            final MultipartConfigElement multipartConfigElement = new MultipartConfigElement("/tmp");
-            req.raw().setAttribute("org.eclipse.jetty.multipartConfig", multipartConfigElement);
-
-            final Part uploadedFile = req.raw().getPart("file");
-            try (final InputStream in = uploadedFile.getInputStream()) {
-                guestsService.addGuests(event, in);
+    private void configureUserResourceEndpoints() {
+        get(Paths.USERS, ContentType.JSON, (req, res) -> {
+            final User user = req.attribute(AuthenticationHandler.AUTHENTICATED_USER);
+            if (Role.ADMIN.equals(user.getRole())) {
+                return usersService.listAll();
+            } else {
+                res.status(HttpServletResponse.SC_FORBIDDEN);
+                return "NOT_OK";
             }
-
-            return "OK";
-        });
+        }, jsonTransformer);
     }
 }

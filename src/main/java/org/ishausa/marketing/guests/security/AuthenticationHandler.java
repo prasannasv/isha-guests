@@ -71,7 +71,9 @@ public class AuthenticationHandler {
             response.redirect(Paths.LOGIN);
 
             halt(HttpServletResponse.SC_UNAUTHORIZED);
-        } else {
+        } else if (user != null) {
+            log.info("authenticated request from user: " + user.getEmail() + ", with role: " + user.getRole() +
+                    " to path: " + request.uri() + ", queryString: " + request.queryString());
             request.attribute(AUTHENTICATED_USER, user);
         }
     }

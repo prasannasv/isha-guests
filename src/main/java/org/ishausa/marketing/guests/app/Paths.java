@@ -15,8 +15,9 @@ public class Paths {
     public static final String ID_PARAM = ":id";
     public static final String EVENT_BY_ID = EVENTS + "/" + ID_PARAM;
 
-    public static final String CENTERS = API_VERSION + "/centers";
-
     public static final String GUEST_FOR_EVENT_ID = EVENT_BY_ID + "/guest";
     public static final String GUESTS_FOR_EVENT_ID = EVENT_BY_ID + "/guests";
+
+    public static final String CENTERS = API_VERSION + "/centers";
+    public static final String USERS = API_VERSION + "/users";
 }
