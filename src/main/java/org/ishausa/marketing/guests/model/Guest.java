@@ -19,4 +19,18 @@ public class Guest {
     private String firstName;
     private String lastName;
     private String email;
+
+    public static Guest createForEvent(final Event event,
+                                       final String firstName,
+                                       final String lastName,
+                                       final String email) {
+        final Guest guest = new Guest();
+
+        guest.setEventId(event.getId());
+        guest.setFirstName(firstName);
+        guest.setLastName(lastName);
+        guest.setEmail(email);
+
+        return guest;
+    }
 }

@@ -3,6 +3,7 @@ package org.ishausa.marketing.guests.app;
 import com.google.common.collect.ImmutableMap;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import org.ishausa.marketing.guests.model.Event;
 import org.ishausa.marketing.guests.model.Role;
 import org.ishausa.marketing.guests.model.User;
 import org.ishausa.marketing.guests.renderer.JsonTransformer;
@@ -18,7 +19,10 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import spark.utils.StringUtils;
 
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -154,8 +158,8 @@ public class EventGuestsApp {
             } else {
                 centersService.createCenter(authenticatedUser, req.body());
             }
-            return "";
-        }, jsonTransformer);
+            return "OK";
+        });
     }
 
     private void configureGuestResourceEndpoints() {
@@ -166,8 +170,26 @@ public class EventGuestsApp {
 
         post(Paths.GUEST_FOR_EVENT_ID, ContentType.JSON, (req, res) -> {
             final String eventId = req.params(Paths.ID_PARAM);
+            // TODO: Address non-existent eventId
             guestsService.addGuest(eventsService.find(eventId), req.body());
-            return "";
+            return "OK";
+        });
+
+        // For bulk upload
+        post(Paths.GUESTS_FOR_EVENT_ID, ContentType.MULTIPART_FORM_DATA, (req, res) -> {
+            final String eventId = req.params(Paths.ID_PARAM);
+            final Event event = eventsService.find(eventId);
+
+            //http://stackoverflow.com/questions/29373468/spark-java-how-to-handle-multipart-form-data-input
+            final MultipartConfigElement multipartConfigElement = new MultipartConfigElement("/tmp");
+            req.raw().setAttribute("org.eclipse.jetty.multipartConfig", multipartConfigElement);
+
+            final Part uploadedFile = req.raw().getPart("file");
+            try (final InputStream in = uploadedFile.getInputStream()) {
+                guestsService.addGuests(event, in);
+            }
+
+            return "OK";
         });
     }
 }

@@ -38,15 +38,16 @@
           <label for="fileSelect" class="col-sm-3 control-label">Add Multiple Guests</label>
 
           <div class="col-sm-8">
-            <input id="fileSelect" type="file" nv-file-select uploader="uploader"
+            <input id="fileSelect"
+                   type="file"
+                   nv-file-select
+                   uploader="uploader"
                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                   options="{url: '/api/v1/events/' + $ctrl.eventId + '/guests'}"
             />
             <br/>
             <ul class="list-group">
               <li class="list-group-item" ng-repeat="item in uploader.queue">
-                <span ng-bind="item.file.name"></span>
-                <button class="btn btn-default" ng-click="item.upload()">Add Guests</button>
+                Uploading <span ng-bind="item.file.name"></span> ...
               </li>
             </ul>
           </div>
