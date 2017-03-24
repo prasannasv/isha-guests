@@ -37,14 +37,8 @@ public class GuestsService {
 
     private final Datastore datastore;
 
-    private final ApiClient silverPopClient;
-
     public GuestsService(final Datastore datastore) {
         this.datastore = datastore;
-        this.silverPopClient = new XmlApiClient(
-                getEnvPropOrThrow("SILVERPOP_API_URL"),
-                getEnvPropOrThrow("SILVERPOP_API_USERNAME"),
-                getEnvPropOrThrow("SILVERPOP_API_PASSWORD"));
     }
 
     public List<Guest> findForEventId(final String eventId) {
@@ -56,10 +50,17 @@ public class GuestsService {
     public void addGuest(final Event event, final String jsonBody) {
         final Guest guest = GSON.fromJson(jsonBody, Guest.class);
         guest.setEventId(event.getId());
-        addGuest(event, guest);
+        addGuest(getSilverPopClient(), event, guest);
     }
 
-    private void addGuest(final Event event, final Guest guest) {
+    private ApiClient getSilverPopClient() {
+        return new XmlApiClient(
+                getEnvPropOrThrow("SILVERPOP_API_URL"),
+                getEnvPropOrThrow("SILVERPOP_API_USERNAME"),
+                getEnvPropOrThrow("SILVERPOP_API_PASSWORD"));
+    }
+
+    private void addGuest(final ApiClient apiClient, final Event event, final Guest guest) {
         log.info("adding guest: " + guest);
 
         try {
@@ -74,7 +75,7 @@ public class GuestsService {
             addRecipientCommand.addColumn(createColumn("Email", guest.getEmail()));
             addRecipientCommand.addColumn(createColumn("gc_event_id", event.createEventId()));
 
-            silverPopClient.executeCommand(addRecipientCommand);
+            apiClient.executeCommand(addRecipientCommand);
 
             insertOrUpdate(guest);
         } catch (final ApiResultException e) {
@@ -115,6 +116,7 @@ public class GuestsService {
     }
 
     public void addGuests(final Event event, final InputStream in) {
+        final ApiClient silverPopClient = getSilverPopClient();
         try {
             final CSVParser parser =
                     CSVFormat.EXCEL
@@ -134,7 +136,7 @@ public class GuestsService {
 
                 final Guest guest = Guest.createForEvent(event, firstName, lastName, email);
 
-                addGuest(event, guest);
+                addGuest(silverPopClient, event, guest);
             }
         } catch (final IOException e) {
             log.log(Level.WARNING, "Failed adding multiple guests", e);

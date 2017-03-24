@@ -1,61 +1,59 @@
 <h3>Add Guest(s)</h3>
-<table class="table">
-  <tr>
-    <td>
-      <form class="form-horizontal" role="form" ng-submit="$ctrl.createGuest(guest)">
-        <div class="form-group">
-          <label for="firstName" class="col-sm-3 control-label">First Name</label>
+<form class="form-horizontal" role="form" ng-submit="$ctrl.createGuest(guest)">
+  <div class="form-group">
+    <label for="firstName" class="col-sm-4 control-label">First Name</label>
 
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="firstName" required ng-model="guest.firstName">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="lastName" class="col-sm-3 control-label">Last Name</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="firstName" required ng-model="guest.firstName">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="lastName" class="col-sm-4 control-label">Last Name</label>
 
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="lastName" required ng-model="guest.lastName">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="email" class="col-sm-3 control-label">Email</label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="email" required ng-model="guest.email">
-          </div>
-        </div>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="lastName" required ng-model="guest.lastName">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="email" class="col-sm-4 control-label">Email</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="email" required ng-model="guest.email">
+    </div>
+  </div>
 
-        <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-8">
-            <button type="submit" class="btn btn-default">Add Guest</button>
-          </div>
-        </div>
-      </form>
-    </td>
+  <div class="form-group">
+    <div class="col-sm-offset-4 col-sm-4">
+      <button type="submit" class="btn btn-default">Add Guest</button>
+    </div>
+  </div>
+</form>
 
-    <td>
-      <div class="com-sm-8 alert alert-info" role="alert">
-        <strong>Note:</strong> Header row must have columns "First Name", "Last Name" and "Email".
-      </div>
-      <form class="form-horizontal" role="form">
-        <div class="form-group">
-          <label for="fileSelect" class="col-sm-3 control-label">Add Multiple Guests</label>
+<!-- FIXME: Dummy form to get that alignment -->
+<form class="form-horizontal">
+  <div class="form-group">
+    <div class="col-sm-offset-4 col-sm-4 alert alert-info" role="alert">
+      <strong>Note:</strong> Header row must have columns "First Name", "Last Name" and "Email".
+    </div>
+  </div>
+</form>
 
-          <div class="col-sm-8">
-            <input id="fileSelect"
-                   type="file"
-                   nv-file-select
-                   uploader="uploader"
-                   accept=".csv"
-            />
-            <br/>
-            <ul class="list-group">
-              <li class="list-group-item" ng-repeat="item in uploader.queue">
-                Uploading <span ng-bind="item.file.name"></span> ...
-              </li>
-            </ul>
-          </div>
-        </div>
-      </form>
-    </td>
-  </tr>
-</table>
+<form class="form-horizontal" role="form">
+  <div class="form-group">
+    <label for="fileSelect" class="col-sm-4 control-label">Add Multiple Guests</label>
+
+    <div class="col-sm-offset-1 col-sm-4">
+      <input id="fileSelect"
+             type="file"
+             nv-file-select
+             uploader="uploader"
+             accept=".csv"
+      />
+      <br/>
+      <ul class="list-group">
+        <li class="list-group-item" ng-repeat="item in uploader.queue">
+          Uploading <span ng-bind="item.file.name"></span> ...
+        </li>
+      </ul>
+    </div>
+  </div>
+</form>
